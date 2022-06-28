@@ -10,20 +10,21 @@ from PIL import Image
 import cv2
 import numpy as np
 
+
 # use one of these or build your own classes and play with them. Make sure the threshold you use is higher than the minimum similarity level between the image and the class texts.
 # You can try using None, spot the threshold value then put it.
 
 # Apples classifier. just execute the code and show some apples and it will classify them
-# tp = UniversalClassifier(["red apple", "green apple", "yellow apple"], 0.6)
+# uc = UniversalClassifier(["red apple", "green apple", "yellow apple"], 0.6)
 
 # Male female classifier. Just let people stay in front of the camera and the algorithm will recognize their gender
-# tp = UniversalClassifier(["a man", "a woman", "a young girl", "a young boy"], 0.45)
+# uc = UniversalClassifier(["a man", "a woman", "a young girl", "a young boy"], 0.45)
 
 # Emotions classifier
-# tp = UniversalClassifier(["a happy face", "a sad face", "a surprised face", "an angry face"], 0.50)
+# uc = UniversalClassifier(["a happy face", "a sad face", "a surprised face", "an angry face"], 0.50)
 
 # Aples count classifier (for this to work, please make sure you show an empty background then start putting apples 1,2, or 3 and it should work)
-# tp = UniversalClassifier(["single apple", "two apples", "three apples"], 0.70)
+# uc = UniversalClassifier(["single apple", "two apples", "three apples"], 0.70)
 
 # Complex caracteristics description, try show images to the camera and you'll see.
 skin_colors = ["white", "black", "yellow", "broun"]
@@ -31,7 +32,7 @@ genders = ["male","female"]
 ages = ["a child","an adult","an old"]
 beards = ["bearded", "beardless"]
 hairs = ["black hair", "blonde hair", "white hair", "red hair"]
-tp = UniversalClassifier([f"{age} {beard if (gender=='male' and age!='child') else ''} {skin_color} {gender} with {hair}" for beard in beards for skin_color in skin_colors for gender in genders for age in ages for hair in hairs], None)
+uc = UniversalClassifier([f"{age} {beard if (gender=='male' and age!='child') else ''} {skin_color} {gender} with {hair}" for beard in beards for skin_color in skin_colors for gender in genders for age in ages for hair in hairs], None)
 
 # Now you come up with your own classifications.
 
@@ -43,7 +44,7 @@ while cap.isOpened():
     success, cv_image = cap.read()
     image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
     image = Image.fromarray(image)
-    output_text, index, similarity=tp.process(image) # try other images red_apple, green_apple, yellow_apple
+    output_text, index, similarity=uc.process(image) # try other images red_apple, green_apple, yellow_apple
 
     cv_image = cv2.resize(cv_image, (1920, 1080))
     # If index <0 then the text meaning is too far from any of the anchor texts. You can still use np.argmin(dists) to find the nearest meaning.
