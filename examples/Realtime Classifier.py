@@ -17,6 +17,9 @@ import numpy as np
 # Apples classifier. just execute the code and show some apples and it will classify them
 # uc = UniversalClassifier(["red apple", "green apple", "yellow apple"], 0.6)
 
+# Objects classifier. just execute the code and show objects that are in your list and it will classify them
+uc = UniversalClassifier(["keys", "glass", "keyboard", "a watch"], 0.85)
+
 # Male female classifier. Just let people stay in front of the camera and the algorithm will recognize their gender
 # uc = UniversalClassifier(["a man", "a woman", "a young girl", "a young boy"], 0.45)
 
@@ -27,13 +30,14 @@ import numpy as np
 # uc = UniversalClassifier(["single apple", "two apples", "three apples"], 0.70)
 
 # Complex caracteristics description, try show images to the camera and you'll see.
+"""
 skin_colors = ["white", "black", "yellow", "broun"]
 genders = ["male","female"]
 ages = ["a child","an adult","an old"]
 beards = ["bearded", "beardless"]
 hairs = ["black hair", "blonde hair", "white hair", "red hair"]
 uc = UniversalClassifier([f"{age} {beard if (gender=='male' and age!='child') else ''} {skin_color} {gender} with {hair}" for beard in beards for skin_color in skin_colors for gender in genders for age in ages for hair in hairs], None)
-
+"""
 # Now you come up with your own classifications.
 
 # open camera

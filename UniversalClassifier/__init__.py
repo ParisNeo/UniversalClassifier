@@ -14,21 +14,22 @@ import numpy as np
 
 
 class UniversalClassifier():
-    def __init__(self, class_names:list, minimum_similarity_level:float=None):
+    def __init__(self, class_names:list, minimum_similarity_level:float=None, force_cpu=False):
         """Builds the TextPinner
 
         Args:
             classes (list[str]) : The list of class names
             minimum_similarity_level (float) : The minimum acceptable similarity between the image and the classes (to avoid classifying images that are very far from all classes)
+            force_cpu(bool) : Force using CPU even when a cuda device is available
         """
         self.class_names = class_names
         self.minimum_similarity_level = minimum_similarity_level
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.device = "cuda" if torch.cuda.is_available() and not force_cpu else "cpu"
         self.clip, self.preprocess = clip.load("ViT-B/32", device=self.device)
         self.class_names_tokenized = clip.tokenize(self.class_names).to(self.device)
         with torch.no_grad():
             # Now let's encode the class names
-            self.class_names_embedding = self.clip.encode_text(self.class_names_tokenized) # Anchor texts
+            self.class_names_embedding = self.clip.encode_text(self.class_names_tokenized).detach() # Anchor texts
             self.class_names_embedding /= self.class_names_embedding.norm(dim=-1, keepdim=True)
 
     def process(self, image:Image):
@@ -42,10 +43,10 @@ class UniversalClassifier():
         """
         image = self.preprocess(image).unsqueeze(0).to(self.device)
         with torch.no_grad():
-            image_features = self.clip.encode_image(image)
+            image_features = self.clip.encode_image(image).detach()
 
         image_features /= image_features.norm(dim=-1, keepdim=True)
-        similarity = (100.0 * image_features @ self.class_names_embedding.T).softmax(dim=-1).detach().numpy()[0,:]
+        similarity = (100.0 * image_features @ self.class_names_embedding.T).softmax(dim=-1).numpy()[0,:]
         max = similarity.max()
         if self.minimum_similarity_level is not None:
             if max<self.minimum_similarity_level:
