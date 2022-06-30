@@ -17,7 +17,7 @@ requirements_dev = read_requirements("requirements_dev.txt")
 
 setuptools.setup(
     name="UniversalClassifier",
-    version="0.0.2",
+    version="0.0.4",
     author="Saifeddine ALOUI",
     author_email="aloui.saifeddine@gmail.com",
     description="A python library for classifying images.",

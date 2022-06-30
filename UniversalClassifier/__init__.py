@@ -46,33 +46,12 @@ class UniversalClassifier():
             image_features = self.clip.encode_image(image).detach()
 
         image_features /= image_features.norm(dim=-1, keepdim=True)
-        similarity = (100.0 * image_features @ self.class_names_embedding.T).softmax(dim=-1).numpy()[0,:]
+        similarity = (100.0 * image_features @ self.class_names_embedding.T).softmax(dim=-1).cpu().numpy()[0,:]
         max = similarity.max()
         if self.minimum_similarity_level is not None:
             if max<self.minimum_similarity_level:
                 return "",-1, similarity
         text_index = similarity.argmax()
         return self.class_names[text_index], text_index, similarity
-        """
         
-        dists = [np.square((self.class_names_embedding[i,:]-image_features[0,:])).mean() for i in range(len(self.class_names))]
-        # Convert distances to probabilities
-        mn = np.min(dists)
-        # If there is a maximum accepted distance then verify!
-        if self.maximum_distance is not None:
-            if mn>self.maximum_distance:
-                # None of the anchors has a meaning near the one proposed by the command_text
-                return "", -1, [0 for d in dists], dists
-
-        mx = np.max(dists)
-        range_ = mx-mn
-        # Compute a probability value
-        prob = np.array([1-(d-mn)/range_ for d in dists])
-        prob = prob/prob.sum()
-        # Get the index of the nearest anchor
-        text_index = np.argmin(dists)
-        # Return everything
-        return self.class_names[text_index], text_index, prob, dists
-        
-        """
 

@@ -1,6 +1,6 @@
 """TextPinner
 Author : Saifeddine ALOUI
-Description : This uses 
+Description : This uses UniversalClassifier to classify multiple video images from the webcam
 
 
 You can imagine doing this for a hue lighting system or other command based app. Be creative
