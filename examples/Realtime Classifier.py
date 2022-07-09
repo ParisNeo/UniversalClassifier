@@ -1,9 +1,7 @@
 """TextPinner
 Author : Saifeddine ALOUI
 Description : This uses UniversalClassifier to classify multiple video images from the webcam
-
-
-You can imagine doing this for a hue lighting system or other command based app. Be creative
+Create your classifier just by giving the classes. The Universal classifier does it for you
 """
 from UniversalClassifier import UniversalClassifier
 from PIL import Image
@@ -18,7 +16,12 @@ import numpy as np
 # uc = UniversalClassifier(["red apple", "green apple", "yellow apple"], 0.6)
 
 # Objects classifier. just execute the code and show objects that are in your list and it will classify them
-uc = UniversalClassifier(["keys", "glass", "keyboard", "a watch"], 0.85)
+# move your camera and whenever the object is visible in the foreground , the classifiers will give a good estimate. When multiple things are presented, the one
+# most likely to be the focus of the image will be selected
+uc = UniversalClassifier(["a person", "two persons", "a smartphone", "a window", "a door", "a laptop", "keys", "a pensil", "a pen", "a red pen", "a blue pen", "a mug", "a glass of water", "an empty glass of water", "a keyboard", "a watch"], 0.10)
+
+# persons counter
+#uc = UniversalClassifier(["a person", "two persons", "three persons", "four persons"], 0.50)
 
 # Male female classifier. Just let people stay in front of the camera and the algorithm will recognize their gender
 # uc = UniversalClassifier(["a man", "a woman", "a young girl", "a young boy"], 0.45)

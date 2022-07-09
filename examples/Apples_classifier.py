@@ -1,9 +1,6 @@
 """TextPinner
 Author : Saifeddine ALOUI
-Description : This uses 
-
-
-You can imagine doing this for a hue lighting system or other command based app. Be creative
+Description : This code uses Universal classifier to classify apples by color
 """
 from UniversalClassifier import UniversalClassifier
 from PIL import Image
